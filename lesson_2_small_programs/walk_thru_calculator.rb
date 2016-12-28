@@ -42,7 +42,7 @@ end
 
 prompt "Hi #{name}!"
 
-loop do # main loop
+loop do
   number1 = ''
   loop do
     prompt("What's the first number?")
@@ -76,28 +76,28 @@ loop do # main loop
   MSG
   prompt(operator_prompt)
 
-operator = ''
-loop do
-  operator = Kernel.gets().chomp()
+  operator = ''
+  loop do
+    operator = Kernel.gets().chomp()
 
-  if %w(1 2 3 4).include?(operator)
-    break
-  else
-    prompt("Must choose 1, 2, 3 or 4")
+    if %w(1 2 3 4).include?(operator)
+      break
+    else
+      prompt("Must choose 1, 2, 3 or 4")
+    end
   end
-end
 
-prompt("#{operation_to_message(operator)} the two numbers...")
+  prompt("#{operation_to_message(operator)} the two numbers...")
 
   result = case operator
            when '1'
-             result = number1.to_i() + number2.to_i()
+             number1.to_i() + number2.to_i()
            when '2'
-             result = number1.to_i() - number2.to_i()
+             number1.to_i() - number2.to_i()
            when '3'
-             result = number1.to_i() * number2.to_i()
+             number1.to_i() * number2.to_i()
            when '4'
-             result = number1.to_f() / number2.to_f()
+             number1.to_f() / number2.to_f()
            end
 
   prompt("The result is #{result}")

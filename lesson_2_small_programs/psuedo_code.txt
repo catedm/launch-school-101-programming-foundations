@@ -1,0 +1,51 @@
+-- PSUEDO CODE --
+
+  - Define a method that takes 2 arguments
+  - Convert those arguments from strings to integers
+  - Add those integers together and save the result in a variable
+  - Print the variable
+
+-- FORMAL PSUEDO CODE --
+
+  - START
+  - DEFINE a method called sum that accepts 2 arguments
+  - CONVERT the strings into integers using to.i
+  - ADD the integers together using +
+  - SET the result to a variable
+  - PRINT the variable
+  - END
+
+-- PSUEDO CODE --
+
+  - Given a collection of strings
+  - Define a method that takes an array of strings as an argument
+  - Iterate over the array
+  - Add each element together
+  - Print the result
+
+-- FORMAL PSUEDO CODE --
+
+  - START
+  - DEFINE a method named string_concat that takes 1 argument containing an array
+  - ITERATE over the array using each
+  - ADD each element in the array to one another
+  - SET the result in a variable
+  - PRINT the result
+  - END
+
+-- PSUEDO CODE --
+
+  - Given a collection of integers
+  - Define a method that takes 1 argument
+  - Iterate over the collection
+  - Save every other element in the collection to a new array
+  - Print the new array
+
+-- FORMAL PSUEDO CODE --
+
+  - START
+  - DEFINE a method called new_array that accepts 1 argument
+  - ITERATE over the array and save every other value
+  - PUSH those values to a new array
+  - PRINT the new array
+  - END

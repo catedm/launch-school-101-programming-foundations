@@ -1,0 +1,16 @@
+-- PUESDO CODE --
+
+START
+
+  - GET the loan amount, set it to variable 'p'
+  - GET the annual percentage rate, set it to variable 'APR_annual'
+  - GET the loan duration in years, set it to 'loan_duration_years'
+
+GET THE MONTHLY INTEREST RATE
+  - CONVERT the APR ('APR_annual') to decimal format ('APR_annual' / 100)
+  - SET the value to variable 'APR_monthly'
+  - DIVIDE 'APR_monthly' by 12, set it to variable 'APR_monthly_float'
+  - MULTIPLY 'APR_monthly_float' by 100, set it to variable 'monthly_rate'
+  - multiply 'monthly_rate' by 100, set it to 'monthly rate'
+
+  

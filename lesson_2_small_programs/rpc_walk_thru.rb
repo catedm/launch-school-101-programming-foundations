@@ -4,14 +4,16 @@ def prompt(message)
   Kernel.puts("=> #{message}")
 end
 
+def win?(first, second)
+  (first == 'rock' && second == 'scissors') ||
+    (first == 'paper' && second == 'rock') ||
+    (first == 'scissors' && second == 'paper')
+end
+
 def display_results(player, computer)
-  if (player == 'rock' && computer == 'scissors') ||
-     (player == 'paper' && computer == 'rock') ||
-     (player == 'scissors' && computer == 'paper')
+  if win?(player, computer)
     prompt("You won!")
-  elsif (computer == 'rock' && player == 'scissors') ||
-        (computer == 'paper' && player == 'rock') ||
-        (computer == 'scissors' && player == 'paper')
+  elsif win?(computer, player)
     prompt("Computer won!")
   else
     prompt("It's a tie!")

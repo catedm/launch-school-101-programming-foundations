@@ -7,7 +7,12 @@
 # Kernel.puts(answer)
 
 require 'yaml'
+LANGUAGE = 'en'
 MESSAGES = YAML.load_file('calculator_messages.yml')
+
+def messages(message, lang='en')
+  MESSAGES[lang][message]
+end
 
 def prompt(message)
   Kernel.puts("=> #{message}")
@@ -30,14 +35,14 @@ def operation_to_message(op)
   end
 end
 
-prompt(MESSAGES['welcome'])
+prompt(messages('welcome', 'es'))
 
 name = ''
 loop do
   name = Kernel.gets.chomp
 
   if name.empty?()
-    prompt(MESSAGES['valid_name'])
+    prompt(messages('valid_name', 'es'))
   else
     break
   end
@@ -54,7 +59,7 @@ loop do
     if valid_number?(number1)
       break
     else
-      prompt(MESSAGES['valid_number'])
+      prompt("Hmm.. That doesn't look like a valid number.")
     end
   end
 

@@ -1,18 +1,14 @@
-munsters = {
-  "Herman" => { "age" => 32, "gender" => "male" },
-  "Lily" => { "age" => 30, "gender" => "female" },
-  "Grandpa" => { "age" => 402, "gender" => "male" },
-  "Eddie" => { "age" => 10, "gender" => "male" },
-  "Marilyn" => { "age" => 23, "gender" => "female"}
-}
-
-munsters.each do |name, details|
-  case details["age"]
-  when 0..17
-    details["age_group"] = "kid"
-  when 18..64
-    details["age_group"] = "adult"
+def color_valid(color)
+  if color == "blue" || color == "green"
+    true
   else
-    details["age_group"] = "senior"
+    false
   end
 end
+
+def color_valid2(color)
+  color == "blue" || color == "green"
+end
+
+p color_valid("blue")
+p color_valid2("blue")

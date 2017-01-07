@@ -1,6 +1,6 @@
 def fun_with_ids
   a_outer = 42
-  b_outer = "forty two"
+  b_outer = "forty two" 
   c_outer = [42]
   d_outer = c_outer[0]
 

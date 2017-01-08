@@ -1,0 +1,18 @@
+1. Display the initial empty 3x3 board.
+  - Use strings to construct a board.
+  - Use an array to store board values.
+2. Ask the user to mark a square.
+  - User will choose a number 1 - 9.
+  - Array will update based on input.
+  - Board will update based on input.
+3. Computer marks a square.
+  - Randomize the computer choice.
+4. Display the updated board state.
+5. If winner, display winner.
+6. If board is full, display tie.
+7. If neither winner nor board is full, go to #2
+  - Loop.
+8. Play again?
+  - Loop.
+9. If yes, go to #1
+10. Good bye!

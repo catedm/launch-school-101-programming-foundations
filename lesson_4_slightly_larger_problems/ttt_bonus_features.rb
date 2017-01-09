@@ -1,3 +1,5 @@
+require "pry"
+
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
@@ -12,7 +14,6 @@ end
 
 # rubocop:disable Metrics/AbcSize
 def display_board(brd)
-  system 'cls'
   puts ""
   puts "Welcome to Tic Tac Toe. You're a #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}. The first player to 5 wins."
   puts ""
@@ -57,6 +58,7 @@ def player_places_piece!(brd)
   square = ''
   loop do
     puts ""
+    binding.pry
     prompt "Choose a position to place a piece: #{joinor(empty_squares(brd), ', ')}"
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
@@ -64,6 +66,17 @@ def player_places_piece!(brd)
   end
 
   brd[square] = PLAYER_MARKER
+end
+
+def find_at_risk_square(brd)
+  WINNING_LINES.each do |line|
+    if brd.values_at(*line).count(PLAYER_MARKER) == 2
+      return true
+    else
+      return false
+    end
+  end
+  nil
 end
 
 def computer_places_piece!(brd)
@@ -90,6 +103,9 @@ def detect_winner(brd)
   nil
 end
 
+computer_score = 0
+player_score = 0
+
 loop do
   board = initialize_board
 
@@ -106,14 +122,12 @@ loop do
 
   display_board(board)
 
+
   if someone_won?(board)
     prompt "#{detect_winner(board)} won!"
   else
     prompt "It's a tie"
   end
-
-  computer_score = 0
-  player_score = 0
 
   computer_score += 1 if detect_winner(board) == "Computer"
   player_score += 1 if detect_winner(board) == "Player"
@@ -121,11 +135,10 @@ loop do
   prompt "Computer score is #{computer_score}. Player score is #{player_score}."
   prompt "The first player to reach 5 wins"
 
-  if player_score == 5
-    break
-  else computer_score == 5
+  if player_score == 5 || computer_score == 5
     break
   end
+
 end
 
 prompt "Thanks for playing Tic Tac Toe! Goodbye."

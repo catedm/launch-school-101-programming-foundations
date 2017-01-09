@@ -13,7 +13,8 @@ end
 # rubocop:disable Metrics/AbcSize
 def display_board(brd)
   system 'cls'
-  puts "You're a #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}."
+  puts ""
+  puts "Welcome to Tic Tac Toe. You're a #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}. The first player to 5 wins."
   puts ""
   puts "     |     |"
   puts "  #{brd[1]}  |  #{brd[2]}  |  #{brd[3]}"
@@ -30,6 +31,18 @@ def display_board(brd)
 end
 # rubocop:enable Metrics/AbcSize
 
+def joinor(arr, delimiter=', ', word='or')
+  if arr.size == 1
+    return arr.join('')
+  elsif arr.size == 2
+    return arr.insert(1, 'or').join(' ')
+  else arr.size != 2
+    arr2 = arr.insert(arr.size - 1, word).join("#{delimiter}")
+    arr2[-3] = ''
+    return arr2
+  end
+end
+
 def initialize_board
   new_board = {}
   (1..9).each { |num| new_board[num] = INITIAL_MARKER }
@@ -43,7 +56,8 @@ end
 def player_places_piece!(brd)
   square = ''
   loop do
-    prompt "Choose a square (#{empty_squares(brd).join(', ')}):"
+    puts ""
+    prompt "Choose a position to place a piece: #{joinor(empty_squares(brd), ', ')}"
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
     prompt "Sorry, that's not a valid choice."
@@ -80,6 +94,7 @@ loop do
   board = initialize_board
 
   loop do
+
     display_board(board)
 
     player_places_piece!(board)
@@ -97,9 +112,20 @@ loop do
     prompt "It's a tie"
   end
 
-  prompt "Play again?"
-  answer = gets.chomp
-  break unless answer.downcase.start_with?('y')
+  computer_score = 0
+  player_score = 0
+
+  computer_score += 1 if detect_winner(board) == "Computer"
+  player_score += 1 if detect_winner(board) == "Player"
+
+  prompt "Computer score is #{computer_score}. Player score is #{player_score}."
+  prompt "The first player to reach 5 wins"
+
+  if player_score == 5
+    break
+  else computer_score == 5
+    break
+  end
 end
 
 prompt "Thanks for playing Tic Tac Toe! Goodbye."

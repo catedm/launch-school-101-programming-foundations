@@ -15,8 +15,6 @@ end
 # rubocop:disable Metrics/AbcSize
 def display_board(brd)
   puts ""
-  puts "Welcome to Tic Tac Toe. You're a #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}. The first player to 5 wins."
-  puts ""
   puts "     |     |"
   puts "  #{brd[1]}  |  #{brd[2]}  |  #{brd[3]}"
   puts "     |     |"
@@ -91,7 +89,11 @@ def computer_places_piece!(brd)
       break if square
     end
   end
-  
+
+  if brd[5] == INITIAL_MARKER
+    return brd[5] = COMPUTER_MARKER
+  end
+
   # just pick a square
   if !square
     square = empty_squares(brd).sample
@@ -119,11 +121,49 @@ def detect_winner(brd)
   nil
 end
 
+FIRST_PLAY = " "
+
+def who_goes_first(board)
+  puts ""
+  prompt "Welcome to Tic Tac Toe!"
+  prompt "You're a #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}. The first player to 5 wins."
+  prompt "Who would you like to play first? Type 'P' for player or 'C for computer.'"
+  answer = gets.chomp
+  loop do
+    if answer.downcase == 'p'
+      player_places_piece!(board)
+      break
+    elsif answer.downcase == 'c'
+      computer_places_piece!(board)
+      break
+    else
+      puts "That is not a valid option. Please try again."
+      answer = gets.chomp
+    end
+  end
+end
+
+def alternate_player(current_player)
+  if current_player == PLAYER_MARKER
+    current_player = COMPUTER_MARKER
+  end
+end
+
+def place_piece!(board, current_player)
+  if current_player == PLAYER_MARKER
+    player_places_piece!(board)
+  elsif current_player == COMPUTER_MARKER
+    computer_places_piece!(board)
+  end
+end
+
 computer_score = 0
 player_score = 0
 
 loop do
   board = initialize_board
+
+  who_goes_first(board) if FIRST_PLAY == 'choose'
 
   loop do
 
@@ -134,6 +174,7 @@ loop do
 
     computer_places_piece!(board)
     break if someone_won?(board) || board_full?(board)
+
   end
 
   display_board(board)

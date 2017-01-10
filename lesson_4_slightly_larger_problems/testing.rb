@@ -70,18 +70,13 @@ end
 def find_at_risk_square(brd)
   WINNING_LINES.each do |line|
     if brd.values_at(*line).count(PLAYER_MARKER) == 2
-      return true
-    else
-      return false
+       return true
     end
   end
   nil
 end
 
 def computer_places_piece!(brd)
-  if find_at_risk_square(brd) == true
-
-  end
   square = empty_squares(brd).sample
   brd[square] = COMPUTER_MARKER
 end

@@ -58,7 +58,6 @@ def player_places_piece!(brd)
   square = ''
   loop do
     puts ""
-    binding.pry
     prompt "Choose a position to place a piece: #{joinor(empty_squares(brd), ', ')}"
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
@@ -68,19 +67,36 @@ def player_places_piece!(brd)
   brd[square] = PLAYER_MARKER
 end
 
-def find_at_risk_square(brd)
-  WINNING_LINES.each do |line|
-    if brd.values_at(*line).count(PLAYER_MARKER) == 2
-      return true
-    else
-      return false
-    end
+def find_at_risk_square(line, brd, marker)
+  if brd.values_at(*line).count(marker) == 2
+    brd.select{|k,v| line.include?(k) && v == INITIAL_MARKER}.keys.first
+  else
+    nil
   end
-  nil
 end
 
 def computer_places_piece!(brd)
-  square = empty_squares(brd).sample
+  square = nil
+
+  # offense first
+  WINNING_LINES.each do |line|
+    square = find_at_risk_square(line, brd, COMPUTER_MARKER)
+    break if square
+  end
+
+  # defense
+  if !square
+    WINNING_LINES.each do |line|
+      square = find_at_risk_square(line, brd, PLAYER_MARKER)
+      break if square
+    end
+  end
+  
+  # just pick a square
+  if !square
+    square = empty_squares(brd).sample
+  end
+
   brd[square] = COMPUTER_MARKER
 end
 

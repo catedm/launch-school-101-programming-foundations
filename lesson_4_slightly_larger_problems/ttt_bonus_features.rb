@@ -121,7 +121,24 @@ def detect_winner(brd)
   nil
 end
 
-FIRST_PLAY = " "
+def alternate_player(current_player)
+  if current_player == PLAYER_MARKER
+    current_player = COMPUTER_MARKER
+  end
+end
+
+def place_piece!(board, current_player)
+  if current_player == PLAYER_MARKER
+    player_places_piece!(board)
+  elsif current_player == COMPUTER_MARKER
+    computer_places_piece!(board)
+  end
+end
+
+computer_score = 0
+player_score = 0
+
+FIRST_PLAY = "choose"
 
 def who_goes_first(board)
   puts ""
@@ -142,23 +159,6 @@ def who_goes_first(board)
     end
   end
 end
-
-def alternate_player(current_player)
-  if current_player == PLAYER_MARKER
-    current_player = COMPUTER_MARKER
-  end
-end
-
-def place_piece!(board, current_player)
-  if current_player == PLAYER_MARKER
-    player_places_piece!(board)
-  elsif current_player == COMPUTER_MARKER
-    computer_places_piece!(board)
-  end
-end
-
-computer_score = 0
-player_score = 0
 
 loop do
   board = initialize_board

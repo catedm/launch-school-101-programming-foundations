@@ -14,6 +14,7 @@ end
 
 # rubocop:disable Metrics/AbcSize
 def display_board(brd)
+  system 'cls'
   puts ""
   puts "     |     |"
   puts "  #{brd[1]}  |  #{brd[2]}  |  #{brd[3]}"
@@ -121,18 +122,16 @@ def detect_winner(brd)
   nil
 end
 
-def alternate_player(current_player)
-  if current_player == PLAYER_MARKER
-    current_player = COMPUTER_MARKER
+def place_piece!(board, current_player)
+  if current_player == 'Player'
+    player_places_piece!(board)
+  elsif current_player == 'Computer'
+    computer_places_piece!(board)
   end
 end
 
-def place_piece!(board, current_player)
-  if current_player == PLAYER_MARKER
-    player_places_piece!(board)
-  elsif current_player == COMPUTER_MARKER
-    computer_places_piece!(board)
-  end
+def alternate_player(current_player)
+  current_player == 'Computer' ? 'Player' : 'Computer'
 end
 
 computer_score = 0
@@ -142,43 +141,41 @@ FIRST_PLAY = "choose"
 
 def who_goes_first(board)
   puts ""
-  prompt "Welcome to Tic Tac Toe!"
   prompt "You're a #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}. The first player to 5 wins."
   prompt "Who would you like to play first? Type 'P' for player or 'C for computer.'"
-  answer = gets.chomp
+  answer = gets.chomp.downcase
   loop do
-    if answer.downcase == 'p'
-      player_places_piece!(board)
-      break
-    elsif answer.downcase == 'c'
-      computer_places_piece!(board)
+    if answer.downcase == 'p' || answer.downcase == 'c'
       break
     else
       puts "That is not a valid option. Please try again."
-      answer = gets.chomp
+      answer = gets.chomp.downcase
     end
+  end
+  answer == 'c' ? 'Computer' : 'Player'
+end
+
+def set_current_player(board)
+  case FIRST_PLAY
+  when 'choose' then who_goes_first(board)
+  when 'player' then 'Player'
+  when 'computer' then 'Computer'
   end
 end
 
 loop do
   board = initialize_board
 
-  who_goes_first(board) if FIRST_PLAY == 'choose'
+  current_player = set_current_player(board)
 
   loop do
 
-    display_board(board)
-
-    player_places_piece!(board)
-    break if someone_won?(board) || board_full?(board)
-
-    computer_places_piece!(board)
-    break if someone_won?(board) || board_full?(board)
+     display_board(board)
+     place_piece!(board, current_player)
+     current_player = alternate_player(current_player)
+     break if someone_won?(board) || board_full?(board)
 
   end
-
-  display_board(board)
-
 
   if someone_won?(board)
     prompt "#{detect_winner(board)} won!"

@@ -169,13 +169,13 @@ loop do
   current_player = set_current_player(board)
 
   loop do
-
      display_board(board)
      place_piece!(board, current_player)
      current_player = alternate_player(current_player)
      break if someone_won?(board) || board_full?(board)
+   end
 
-  end
+  display_board(board)
 
   if someone_won?(board)
     prompt "#{detect_winner(board)} won!"

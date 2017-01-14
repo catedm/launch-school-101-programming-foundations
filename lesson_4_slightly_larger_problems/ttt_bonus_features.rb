@@ -1,8 +1,8 @@
 require "pry"
 
-INITIAL_MARKER = ' '
-PLAYER_MARKER = 'X'
-COMPUTER_MARKER = 'O'
+INITIAL_MARKER = ' '.freeze
+PLAYER_MARKER = 'X'.freeze
+COMPUTER_MARKER = 'O'.freeze
 
 WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] +
                 [[1, 4, 7], [2, 5, 8], [3, 6, 9]] +
@@ -33,13 +33,13 @@ end
 
 def joinor(arr, delimiter=', ', word='or')
   if arr.size == 1
-    return arr.join('')
+    arr.join('')
   elsif arr.size == 2
-    return arr.insert(1, 'or').join(' ')
-  else arr.size != 2
+    arr.insert(1, 'or').join(' ')
+  elsif arr.size != 2
     arr2 = arr.insert(arr.size - 1, word).join("#{delimiter}")
     arr2[-3] = ''
-    return arr2
+    arr2
   end
 end
 
@@ -57,7 +57,7 @@ def player_places_piece!(brd)
   square = ''
   loop do
     puts ""
-    prompt "Choose a position to place a piece: #{joinor(empty_squares(brd), ', ')}"
+    prompt "Choose a position: #{joinor(empty_squares(brd), ', ')}"
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
     prompt "Sorry, that's not a valid choice."
@@ -68,22 +68,18 @@ end
 
 def find_at_risk_square(line, brd, marker)
   if brd.values_at(*line).count(marker) == 2
-    brd.select{|k,v| line.include?(k) && v == INITIAL_MARKER}.keys.first
-  else
-    nil
+    brd.select { |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
   end
+  nil
 end
 
 def computer_places_piece!(brd)
   square = nil
-
-  # offense first
   WINNING_LINES.each do |line|
     square = find_at_risk_square(line, brd, COMPUTER_MARKER)
     break if square
   end
 
-  # defense
   if !square
     WINNING_LINES.each do |line|
       square = find_at_risk_square(line, brd, PLAYER_MARKER)
@@ -95,7 +91,6 @@ def computer_places_piece!(brd)
     return brd[5] = COMPUTER_MARKER
   end
 
-  # just pick a square
   if !square
     square = empty_squares(brd).sample
   end
@@ -137,11 +132,11 @@ end
 computer_score = 0
 player_score = 0
 
-FIRST_PLAY = "choose"
+FIRST_PLAY = "choose".freeze
 
-def who_goes_first(board)
+def who_goes_first
   puts ""
-  prompt "You're a #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}. The first player to 5 wins."
+  prompt "You're a #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}."
   prompt "Who would you like to play first? Type 'P' for player or 'C for computer.'"
   answer = gets.chomp.downcase
   loop do
@@ -155,9 +150,9 @@ def who_goes_first(board)
   answer == 'c' ? 'Computer' : 'Player'
 end
 
-def set_current_player(board)
+def set_current_player
   case FIRST_PLAY
-  when 'choose' then who_goes_first(board)
+  when 'choose' then who_goes_first
   when 'player' then 'Player'
   when 'computer' then 'Computer'
   end
@@ -166,14 +161,14 @@ end
 loop do
   board = initialize_board
 
-  current_player = set_current_player(board)
+  current_player = set_current_player
 
   loop do
-     display_board(board)
-     place_piece!(board, current_player)
-     current_player = alternate_player(current_player)
-     break if someone_won?(board) || board_full?(board)
-   end
+    display_board(board)
+    place_piece!(board, current_player)
+    current_player = alternate_player(current_player)
+    break if someone_won?(board) || board_full?(board)
+  end
 
   display_board(board)
 
@@ -192,7 +187,6 @@ loop do
   if player_score == 5 || computer_score == 5
     break
   end
-
 end
 
 prompt "Thanks for playing Tic Tac Toe! Goodbye."

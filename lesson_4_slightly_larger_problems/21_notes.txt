@@ -1,0 +1,52 @@
+- 52 card deck:
+  - 4 suits (hearts, diamonds, clubs, and spades)
+  - 13 values (2, 3, 4, 5, 6, 7, 8, 9, 10, jack, queen, king, ace)
+
+- Goal:
+  - get as close to 21 as possible without going over. If you go over, you "bust" and lose.
+
+- Setup:
+  - game consists of a "dealer" and a "player"
+  - Both are initially dealt 2 cards
+  - "Player" can see their 2 cards, but can only see one of the dealer's cards
+
+- Card values:
+  - 2 thru 10 are worth their face value
+  - jack, queen and king are each worth 10
+
+- Ace value:
+  - ace can be worth 1 or 11
+    - ace's value is determined each time a new card is drawn from the deck
+      - ex: if the hand contains a 2, an ace, and a 5, then the total value of the hand is 18.
+        - in this case the ace is worth 11 because the sum of the hand (2 + 11 + 5) doesn't exceed 21
+        - another card is drawn and it happens to be an ace
+        - program will have to determine the value of both aces
+          - if the sum of the hand (2 + 11 + 5 + 11) exceeds 21 then one of the aces must be worth 1
+            - one of the aces being worth 1 brings the total of the hand to 19
+            - think about a CASE STATEMENT here
+
+- Player Turn:
+  - player goes first, and can decide to either "hit" or "stay"
+  - a "hit" means the player will ask for another card
+    - remember if the total exceeds 21, the player "busts" and loses
+    - if the player "busts" the game is over and the dealer won
+
+- Dealer Turn:
+  - when the player "stays" its the dealers turn
+  - the dealer will "hit" until the total is at least 17
+
+- Comparing Cards:
+  - when both the player and the dealer stay, compare the total value of the cards and see who has the highest value
+
+
+-- HIGH LEVEL PSEUDO CODE --
+
+1. Initialize deck
+2. Deal cards to player and dealer
+3. Player turn: hit or stay
+  - repeat until bust or "stay"
+4. If player bust, dealer wins.
+5. Dealer turn: hit or stay
+  - repeat until total >= 17
+6. If dealer bust, player wins.
+7. Compare cards and declare winner.

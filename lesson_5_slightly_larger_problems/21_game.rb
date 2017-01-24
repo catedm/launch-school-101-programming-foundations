@@ -131,8 +131,8 @@ loop do
     display_results(dealer_cards, player_cards)
     dealer_score += 1
     prompt "The score is: Player: #{player_score} Dealer: #{dealer_score}"
-    prompt "The first player to 5 wins"
-    if player_score == 5 || dealer_score == 5
+    prompt "The first player to #{WINNING_TOTAL} wins"
+    if player_score == WINNING_TOTAL || dealer_score == WINNING_TOTAL
       break
     else
       next
@@ -157,8 +157,8 @@ loop do
     display_results(dealer_cards, player_cards)
     player_score += 1
     prompt "The score is: Player: #{player_score} Dealer: #{dealer_score}"
-    prompt "The first player to 5 wins"
-    if player_score == 5 || dealer_score == 5
+    prompt "The first player to #{WINNING_TOTAL} wins"
+    if player_score == WINNING_TOTAL || dealer_score == WINNING_TOTAL
       break
     else
       next
@@ -176,17 +176,17 @@ loop do
 
   puts "=============="
   prompt "The score is: Player: #{player_score} Dealer: #{dealer_score}"
-  prompt "The first player to 5 wins"
+  prompt "The first player to #{WINNING_TOTAL} wins"
   puts "=============="
 
-  if player_score == 5 || dealer_score == 5
+  if player_score == WINNING_TOTAL || dealer_score == WINNING_TOTAL
     break
   end
 end
 
-if dealer_score == 5
+if dealer_score == WINNING_TOTAL
   prompt "DEALER WINS!"
-elsif player_score == 5
+elsif player_score == WINNING_TOTAL
   prompt "PLAYER WINS!"
 end
 

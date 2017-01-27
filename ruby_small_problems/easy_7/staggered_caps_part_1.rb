@@ -1,12 +1,15 @@
-# input: 1 string
-# output: 1 new string
-# str.downcase
-# letter.upcase if index.even?
-
 def staggered_case(str)
-  str.downcase.chars.each_with_index do |char, index|
-    char.upcase! if index.even?
-  end.join
+  result = ''
+  need_upper = true
+  str.chars.each do |char|
+    if need_upper
+      result += char.upcase
+    else
+      result += char.downcase
+    end
+      need_upper = !need_upper
+  end
+  result
 end
 
 p staggered_case('I Love Launch School!') == 'I LoVe lAuNcH ScHoOl!'

@@ -1,10 +1,19 @@
-# INCOMPLETE
-
 def staggered_case(str)
-  str.downcase.chars.each_with_index do |char, index|
-    next if char != /[a-z]/i
-    char.upcase!
-  end.join
+  result = ''
+  need_upper = true
+  str.chars.each do |char|
+    if char =~ /[a-z]/i
+      if need_upper
+        result += char.upcase
+      else
+        result += char.downcase
+      end
+        need_upper = !need_upper
+      else
+        result += char
+      end
+  end
+  result
 end
 
 p staggered_case('I Love Launch School!') == 'I lOvE lAuNcH sChOoL!'
